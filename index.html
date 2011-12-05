@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title></title>
+    <link rel="stylesheet" src="css/style.css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script src="js/d3.js"></script>
 	<script src="js/d3.geom.js"></script>
@@ -12,7 +13,7 @@
 $(function() {
 	var hash = window.location.hash,
 		token = hash.split('=').pop(),
-		api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}",
+		api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
 		url = api.replace('{token}', token).replace('{v}', '20111204');
 
 	$.ajax({
