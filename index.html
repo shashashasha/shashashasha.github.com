@@ -23,8 +23,15 @@ $(function() {
 
             points = [];
 
+            var lat = d3.scale.linear()
+                        .domain([38,37])
+                        .range([0,600]);
+            var lon = d3.scale.linear()
+                        .domain([-122.1,-122.5])
+                        .range([0,400]);
+
             $.each(checkins, function(i, e) {
-                var pt = [e.venue.location.lat, parseFloat(e.venue.location.lng)+180];
+                var pt = [lat(e.venue.location.lat), lon(parseFloat(e.venue.location.lng))];
                 points.push(pt);
             });
 
