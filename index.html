@@ -25,11 +25,11 @@ $(function() {
             points = [];
 
             var lat = d3.scale.linear()
-                        .domain([37.8,37])
-                        .range([0,600]);
-            var lon = d3.scale.linear()
-                        .domain([-122.5, -122.1])
+                        .domain([40,30])
                         .range([0,300]);
+            var lon = d3.scale.linear()
+                        .domain([-122, -60])
+                        .range([0,900]);
 
             $.each(checkins, function(i, e) {
                 var pt = [lon(parseFloat(e.venue.location.lng)), lat(e.venue.location.lat)];
