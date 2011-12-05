@@ -24,7 +24,7 @@ $(function() {
             points = [];
 
             $.each(checkins, function(i, e) {
-                var pt = [e.venue.location.lat, e.venue.location.lng];
+                var pt = [e.venue.location.lat, parseFloat(e.venue.location.lng)+180];
                 points.push(pt);
             });
 
