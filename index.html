@@ -19,8 +19,19 @@ $(function() {
 		url: url,
 		dataType: 'json',
 		success: function(data) {
-			console.log(data);
-		}
+            var checkins = data.response.checkins.items;
+
+            points = [];
+
+            $.each(checkins, function(i, e) {
+                var pt = [e.venue.lat, e.venue.lng];
+                points.push(pt);
+            });
+
+            console.log('points loaded:', points);
+
+            update();
+        }
 	});
 });
 
@@ -30,24 +41,24 @@ var main = d3.select("body").append("div")
             .attr("width","900px")
             .attr("height","400px");
 
-        var points = [];
+var points;
 
-        var g = main.append("svg:g")
-                .attr("id","delaunay");
+var g = main.append("svg:g")
+        .attr("id","delaunay");
 
-        function update(){
-            g.selectAll("path")
-            .data(d3.geom.delaunay(line))
-            .enter().append("svg:path");
+function update(){
+    g.selectAll("path")
+    .data(d3.geom.delaunay(points))
+    .enter().append("svg:path");
 
-            g.selectAll("path")
-                .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
-        }
+    g.selectAll("path")
+        .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
+}
 
-        $("#output").click(function(){
-            var code = $("#svg").html();
-            $("body").append($("<div>").text(code));
-        })
+$("#output").click(function(){
+    var code = $("#svg").html();
+    $("body").append($("<div>").text(code));
+})
 
 </script>
 
