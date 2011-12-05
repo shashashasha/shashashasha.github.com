@@ -2,6 +2,8 @@
 <head>
 	<title></title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script src="js/d3.js"></script>
+	<script src="js/d3.geom.js"></script>
 </head>
 <body>
 
@@ -21,6 +23,31 @@ $(function() {
 		}
 	});
 });
+
+var main = d3.select("body").append("div")
+            .attr("id","svg")
+            .append("svg:svg")
+            .attr("width","900px")
+            .attr("height","400px");
+
+        var points = [];
+
+        var g = main.append("svg:g")
+                .attr("id","delaunay");
+
+        function update(){
+            g.selectAll("path")
+            .data(d3.geom.delaunay(line))
+            .enter().append("svg:path");
+
+            g.selectAll("path")
+                .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
+        }
+
+        $("#output").click(function(){
+            var code = $("#svg").html();
+            $("body").append($("<div>").text(code));
+        })
 
 </script>
 
