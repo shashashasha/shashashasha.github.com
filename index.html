@@ -32,7 +32,7 @@ $(function() {
                         .range([0,300]);
 
             $.each(checkins, function(i, e) {
-                var pt = [lat(e.venue.location.lat), lon(parseFloat(e.venue.location.lng))];
+                var pt = [lon(parseFloat(e.venue.location.lng)), lat(e.venue.location.lat)];
                 points.push(pt);
             });
 
