@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="../d3_div/d3.js"></script>
-        <script type="text/javascript" src="../d3_div/d3.geom.js"></script>
+        <script type="text/javascript" src="lib/polymaps.js"></script>
+        <script type="text/javascript" src="lib/d3.js"></script>
+        <script type="text/javascript" src="lib/d3.geom.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <style type="text/css">
             path{
@@ -17,6 +18,14 @@
                 width: 150px;
                 text-align: center;
             }
+
+            #map {
+                position: absolute;
+                top: 150px;
+                opacity: .5;
+                width: 900px;
+                height: 400px;
+            }
         </style>
     </head>
     <body>
@@ -24,6 +33,7 @@
         <input type="text" id="coords" />
         <div id="submit">click me rawr</div>
         <div id="output">click to output</div>
+        <div id="map"></div>
     </body>
     <script>
         var main = d3.select("body").append("div")
@@ -43,14 +53,18 @@
                 .enter().append("svg:path")
                 .attr("opacity",0);
 
-            var x = d3.scale.linear()
-                    .domain([d3.min(lon)-1,d3.max(lon)+1])
-                    .range([0,300]);
-            var y = d3.scale.linear()
-                    .domain([d3.max(lat)+1,d3.min(lat)-1])
-                    .range([0,600]);
+            mappu.updateBounds(lat, lon);
 
-            console.log(d3.min(lon),d3.max(lon),d3.min(lat),d3.max(lat));
+            var bounds = mappu.getBounds();
+
+            var x = d3.scale.linear()
+                    .domain([d3.min(lon), d3.max(lon)])
+                    .range([bounds.l, bounds.r]);
+            var y = d3.scale.linear()
+                    .domain([d3.max(lat), d3.min(lat)])
+                    .range([bounds.b, bounds.t]);
+
+            // console.log(d3.min(lon),d3.max(lon),d3.min(lat),d3.max(lat));
 
             g.selectAll("path").transition().duration(500)
                 .attr("opacity",1)
@@ -58,7 +72,15 @@
                     var l = d.length;
                     var draw = [];
                     for (var i = 0; i < l; i++){
-                        draw.push([x(d[i][0]),y(d[i][1])]);
+                        var loc = {
+                            lat: parseFloat(d[i][1]),
+                            lon: parseFloat(d[i][0])
+                        };
+
+                        var pt = mappu.map.locationPoint(loc);
+
+                        // draw.push([x(d[i][0]),y(d[i][1])]);
+                        draw.push([pt.x, pt.y]);
                     } 
                     return "M" + draw.join("L") + "Z"; 
                 });        
@@ -71,15 +93,14 @@
 
         $("#submit").click(function(){
             var input = $("#coords").val();
-            var coords = input.split(",");
+            var coords = input.split(","); // [(Math.random() * 15) + 27, -120 + (Math.random() * 60)];// 
             lat.push(parseFloat(coords[0]));
             lon.push(parseFloat(coords[1]));
-            console.log("lat",lat);
-            console.log("lon",lon);
             //points.push([Math.random() * 900, Math.random() * 400])            
             points.push([coords[1],coords[0]]);
-            //main.append("svg:text").text(input).attr("x",x(coords[1])).attr("y",y(coords[0]));
+            // main.append("svg:text").text(input).attr("x",x(coords[1])).attr("y",y(coords[0]));
             update();
         });
     </script>
+    <script type="text/javascript" src="js/map.js"></script>
 </html>
