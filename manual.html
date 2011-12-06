@@ -56,11 +56,11 @@
                 .attr("opacity",1)
                 .attr("d", function(d) {
                     var l = d.length;
-                    var points = [];
+                    var draw = [];
                     for (var i = 0; i < l; i++){
-                        points.push([x(d[i][0]),y(d[i][1])]);
+                        draw.push([x(d[i][0]),y(d[i][1])]);
                     } 
-                    return "M" + points.join("L") + "Z"; 
+                    return "M" + draw.join("L") + "Z"; 
                 });        
         }
 
@@ -72,9 +72,10 @@
         $("#submit").click(function(){
             var input = $("#coords").val();
             var coords = input.split(",");
-            lat.push(coords[0]);
-            lon.push(coords[1]);
+            lat.push(parseFloat(coords[0]));
+            lon.push(parseFloat(coords[1]));
             console.log("lat",lat);
+            console.log("lon",lon);
             //points.push([Math.random() * 900, Math.random() * 400])            
             points.push([coords[1],coords[0]]);
             //main.append("svg:text").text(input).attr("x",x(coords[1])).attr("y",y(coords[0]));
