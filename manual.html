@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="../d3_div/d3.js"></script>
+        <script type="text/javascript" src="../d3_div/d3.geom.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <style type="text/css">
+            path{
+                stroke: black;
+                fill: transparent;
+            }
+            #submit, #output {
+                cursor: pointer;
+                border: 1px solid black;
+                padding: 2px;
+                margin: 4px 0;
+                width: 150px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>meshu</h2>
+        <input type="text" id="coords" />
+        <div id="submit">click me rawr</div>
+        <div id="output">click to output</div>
+    </body>
+    <script>
+        var main = d3.select("body").append("div")
+            .attr("id","svg")
+            .append("svg:svg")
+            .attr("width","900px")
+            .attr("height","600px");
+
+        var points = [], lat = [], lon = [];
+
+        var g = main.append("svg:g")
+                .attr("id","delaunay");
+
+        function update(){
+            g.selectAll("path")
+                .data(d3.geom.delaunay(points))
+                .enter().append("svg:path")
+                .attr("opacity",0);
+
+            var x = d3.scale.linear()
+                    .domain([d3.min(lon)-1,d3.max(lon)+1])
+                    .range([0,300]);
+            var y = d3.scale.linear()
+                    .domain([d3.max(lat)+1,d3.min(lat)-1])
+                    .range([0,600]);
+
+            console.log(d3.min(lon),d3.max(lon),d3.min(lat),d3.max(lat));
+
+            g.selectAll("path").transition().duration(500)
+                .attr("opacity",1)
+                .attr("d", function(d) {
+                    var l = d.length;
+                    var points = [];
+                    for (var i = 0; i < l; i++){
+                        points.push([x(d[i][0]),y(d[i][1])]);
+                    } 
+                    return "M" + points.join("L") + "Z"; 
+                });        
+        }
+
+        $("#output").click(function(){
+            var code = $("#svg").html();
+            $("body").append($("<div>").text(code));
+        })
+
+        $("#submit").click(function(){
+            var input = $("#coords").val();
+            var coords = input.split(",");
+            lat.push(coords[0]);
+            lon.push(coords[1]);
+            console.log("lat",lat);
+            //points.push([Math.random() * 900, Math.random() * 400])            
+            points.push([coords[1],coords[0]]);
+            //main.append("svg:text").text(input).attr("x",x(coords[1])).attr("y",y(coords[0]));
+            update();
+        });
+    </script>
+</html>
