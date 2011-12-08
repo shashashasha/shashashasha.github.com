@@ -23,8 +23,8 @@
                 position: absolute;
                 top: 150px;
                 opacity: .5;
-                width: 900px;
-                height: 400px;
+                width: 800px;
+                height: 800px;
             }
         </style>
     </head>
@@ -39,8 +39,8 @@
         var main = d3.select("body").append("div")
             .attr("id","svg")
             .append("svg:svg")
-            .attr("width","900px")
-            .attr("height","600px");
+            .attr("width","800px")
+            .attr("height","800px");
 
         var points = [], lat = [], lon = [];
 
@@ -86,6 +86,13 @@
                 });        
         }
 
+        function addPoint(latitude, longitude) {
+            lat.push(parseFloat(latitude));
+            lon.push(parseFloat(longitude));
+            points.push([longitude, latitude]);
+            update();
+        }
+
         $("#output").click(function(){
             var code = $("#svg").html();
             $("body").append($("<div>").text(code));
@@ -93,13 +100,19 @@
 
         $("#submit").click(function(){
             var input = $("#coords").val();
-            var coords = input.split(","); // [(Math.random() * 15) + 27, -120 + (Math.random() * 60)];// 
-            lat.push(parseFloat(coords[0]));
-            lon.push(parseFloat(coords[1]));
+            var coords = [(Math.random() * 8) + 33, -120 + (Math.random() * 10)];// input.split(","); // 
+            
             //points.push([Math.random() * 900, Math.random() * 400])            
-            points.push([coords[1],coords[0]]);
             // main.append("svg:text").text(input).attr("x",x(coords[1])).attr("y",y(coords[0]));
-            update();
+            addPoint(coords[1], coords[0]);
+        });
+
+        $("#map").click(function(e) {
+            var loc = mappu.map.pointLocation({ x: e.offsetX, y: e.offsetY });
+
+            console.log(loc.lat, loc.lon);
+            addPoint(loc.lat, loc.lon);
+
         });
     </script>
     <script type="text/javascript" src="js/map.js"></script>
