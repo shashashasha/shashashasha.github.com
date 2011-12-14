@@ -13,18 +13,27 @@ sb.meshu = function(frame) {
 		// mesh.add()
 	});
 
+	// this is tied to a global submit button for now
     $("#submit").click(function(){
         var input = $("#coords").val();
+
+        // random coordinate
         var coords = [(Math.random() * 8) + 33, -120 + (Math.random() * 10)];
-        // input.split(","); // 
-        
-        //points.push([Math.random() * 900, Math.random() * 400])            
-        // main.append("svg:text").text(input).attr("x",x(coords[1])).attr("y",y(coords[0]));
-        
+        // input.split(",");
+
         mesh.add(coords[0], coords[1]);
         map.updateBounds(mesh.lats(), mesh.lons());
     });
 
+	// this is tied to a global output button for now
+    $("#output").click(function(){
+        $("body").append($("<div>").text(self.output()));
+    });
+
+    // output the contents of our mesh
+    self.output = function() {
+    	return mesh.output();
+    };
 
 	return self;
 };

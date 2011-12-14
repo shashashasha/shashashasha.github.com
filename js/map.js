@@ -57,36 +57,52 @@ sb.map = function(frame, width, height) {
 			lon: d3.max(lons)
 		}];
 
-		// self.map.zoom(10); 
-		// .center({
-		// 	lat: 0, lon: 0
-		// });
+		self.map.extent(extent);
+	};
 
-		// var sw_pt = self.map.locationPoint(extent[0]);
-		// var ne_pt = self.map.locationPoint(extent[1]);
+	// this was old, from when we were updating the proportions of the map. 
+	// there are a lot of quirks here because of the difference 
+	// between the extent you give it and the one polymaps ends up with
+	self.resizeContainer = function(lats, lons) {
+		// south-west, north-east 
+		var extent = [{ 
+			lat: d3.min(lats), 
+			lon: d3.min(lons) 
+		}, 
+		{ 
+			lat: d3.max(lats), 
+			lon: d3.max(lons)
+		}];
+
+		// reset the view for a bit
+		self.map.zoom(10).center({
+			lat: 0, lon: 0
+		});
+
+		var sw_pt = self.map.locationPoint(extent[0]);
+		var ne_pt = self.map.locationPoint(extent[1]);
 		
-		// var width = Math.abs(ne_pt.x - sw_pt.x);
-		// var height = Math.abs(ne_pt.y - sw_pt.y);
-		// var max = 900;
-		// var ratio = width > height ? max / width : max / height;
+		var width = Math.abs(ne_pt.x - sw_pt.x);
+		var height = Math.abs(ne_pt.y - sw_pt.y);
+		var max = 900;
+		var ratio = width > height ? max / width : max / height;
 
-		// width *= ratio;
-		// height *= ratio;
+		width *= ratio;
+		height *= ratio;
 
-		// container.style.width = (width) + 'px';
-		// container.style.height = (height) + 'px';
+		container.style.width = (width) + 'px';
+		container.style.height = (height) + 'px';
 
 		self.map.extent(extent);
 
 		// console.log(extent[0].lat - self.map.extent()[0].lat, extent[0].lon - self.map.extent()[0].lon);
 		// console.log('w:', width, 'h:', height);
 		
-		// var lp = self.map.locationPoint;
-		// var dif = lp(extent[0]).y - lp(self.map.extent()[0]).y;
+		var dif = self.l2p(extent[0]).y - self.l2p(self.map.extent()[0]).y;
 		
-		// if (dif) {
-		// 	container.style.top = (150 - dif) + 'px';	
-		// }
+		if (dif) {
+			container.style.top = (150 - dif) + 'px';	
+		}
 	};
 
 	// take extent and get it in x y 

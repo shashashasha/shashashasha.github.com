@@ -1,9 +1,11 @@
 var sb = sb || {};
 
 sb.mesh = function(frame, map, width, height) {
-	var self = {};
+	var self = {},
+		selfId = parseInt(Math.random() * 10000000000);
 
     var main = d3.select(frame || "body").append("div")
+        .attr("id", selfId)
         .attr("style", "position:absolute;z-index:100;")
         .append("svg:svg")
         .attr("width", width || "400px")
@@ -21,12 +23,9 @@ sb.mesh = function(frame, map, width, height) {
     function update(){
         g.selectAll("path")
             .data(d3.geom.delaunay(points))
-            .enter().append("svg:path")
-            .attr("opacity", 0);
+            .enter().append("svg:path");
 
         g.selectAll("path")
-        	// .transition().duration(500)
-            .attr("opacity",1)
             .attr("d", function(d) {
                 var l = d.length;
                 var draw = [];
@@ -72,14 +71,18 @@ sb.mesh = function(frame, map, width, height) {
 
         var lat = parseFloat(latitude);
         var lon = parseFloat(longitude);
-        
+
         lats.push(lat);
         lons.push(lon);
 
         if (points.length) {
         	new_pt = [lon, lat];
+
+        	// make the new point start from the last location
             var last = points[points.length-1];
             points.push([last[0], last[1]]);  
+
+            // animate the new point in place
             updateInterval = setInterval(update, 40);
         } else {
             points.push([lon, lat]);
@@ -104,6 +107,10 @@ sb.mesh = function(frame, map, width, height) {
 
     	points = pts;
     	return self;
+    };
+
+    self.output = function() {
+    	return $('#' + selfId).html();
     };
 
 	return self;
