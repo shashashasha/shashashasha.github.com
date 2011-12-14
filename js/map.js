@@ -1,22 +1,52 @@
-var mappu = {};
+var sb = sb || {};
 
-mappu = function() {
+sb.map = function(frame, width, height) {
 	var po = org.polymaps;
 	var self = {};
 
 	var baseURL = "http://tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/22677/256/{Z}/{X}/{Y}.png";
-	var container = document.getElementById("map");
 
+	var container = d3.select(frame || "body").append("div")[0][0];
+      
+    container.style.position = "absolute";
+    container.style.width = width || '400px';
+    container.style.height = height || '400px';
+
+	// var container = document.getElementById(selector || "body");
+	var image = po.image()
+		.url(po.url(baseURL)
+	    .hosts(["a.", "b.", "c.", ""]));
+	    
 	self.map = po.map()
 		.container(container.appendChild(po.svg("svg")))
 		.zoom(13)
 		.center({ lat: 37.755, lon: -122.445 });
 	
-	self.map.add(po.image()
-		.url(po.url(baseURL)
-	    .hosts(["a.", "b.", "c.", ""])));
+	self.map.add(image);
+
+	// self.map.add(po.interact());
+
+	self.frame = function() {
+		return container;
+	};
+
+	self.show = function() {
+		if (!image.map()) {
+			self.map.add(image);		
+		}
+	};
+
+	self.hide = function() {
+		if (image.map()) {
+			self.map.remove(image);
+		}
+	};
 
 	self.updateBounds = function(lats, lons) {
+		if (lats.length < 3 || lons.length < 3) {
+			return;
+		}
+
 		// south-west, north-east 
 		var extent = [{ 
 			lat: d3.min(lats), 
@@ -27,7 +57,8 @@ mappu = function() {
 			lon: d3.max(lons)
 		}];
 
-		// self.map.zoom(10).center({
+		// self.map.zoom(10); 
+		// .center({
 		// 	lat: 0, lon: 0
 		// });
 
@@ -44,10 +75,9 @@ mappu = function() {
 
 		// container.style.width = (width) + 'px';
 		// container.style.height = (height) + 'px';
-		
-		// self.map.extent(extent);
 
-		// console.log(extent, self.map.extent());
+		self.map.extent(extent);
+
 		// console.log(extent[0].lat - self.map.extent()[0].lat, extent[0].lon - self.map.extent()[0].lon);
 		// console.log('w:', width, 'h:', height);
 		
@@ -73,5 +103,13 @@ mappu = function() {
 		};
 	};
 
+	self.l2p = function(loc) {
+		return self.map.locationPoint(loc);
+	};
+
+	self.p2l = function(pt) {
+		return self.map.pointLocation(pt);
+	};
+
 	return self;
-}();
+};

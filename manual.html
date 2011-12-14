@@ -47,6 +47,10 @@
         var g = main.append("svg:g")
                 .attr("id","delaunay");
 
+        var targetLat = 0;
+        var targetLon = 0;
+        var updateInterval = 0;
+
         function update(){
             g.selectAll("path")
                 .data(d3.geom.delaunay(points))
@@ -66,7 +70,7 @@
 
             // console.log(d3.min(lon),d3.max(lon),d3.min(lat),d3.max(lat));
 
-            g.selectAll("path").transition().duration(500)
+            g.selectAll("path") // .transition().duration(500)
                 .attr("opacity",1)
                 .attr("d", function(d) {
                     var l = d.length;
@@ -83,14 +87,39 @@
                         draw.push([pt.x, pt.y]);
                     } 
                     return "M" + draw.join("L") + "Z"; 
-                });        
+                });    
+                
+            var last = points[points.length-1];
+            if (Math.abs(last[0] - targetLon) > .001) {
+                last[0] += (targetLon - last[0]) / 5;
+            }    
+            if (Math.abs(last[1] - targetLat) > .001) {
+                last[1] += (targetLat - last[1]) / 5;
+            }    
+
+            points[points.length - 1] = last;
+            
+            if (Math.abs(last[1] - targetLat) < .002 && Math.abs(last[0] - targetLon) < .002) {
+                console.log('less than min');
+                clearInterval(updateInterval);
+            }
+            console.log(last, targetLat, targetLon);
+
         }
 
         function addPoint(latitude, longitude) {
-            lat.push(parseFloat(latitude));
-            lon.push(parseFloat(longitude));
-            points.push([longitude, latitude]);
-            update();
+            targetLat = parseFloat(latitude);
+            targetLon = parseFloat(longitude)
+            lat.push(targetLat);
+            lon.push(targetLon);
+            if (points.length) {
+                var last = points[points.length-1];
+                points.push([last[0], last[1]]);  
+                updateInterval = setInterval(update, 60);
+            } else {
+                points.push([longitude, latitude]);
+                update();
+            }
         }
 
         $("#output").click(function(){
@@ -115,5 +144,6 @@
 
         });
     </script>
+    <script type="text/javascript" src="js/mesh.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
 </html>
