@@ -8,9 +8,7 @@ sb.meshu = function(frame) {
 	$(frame).click(function(e) {
         var loc = map.p2l({ x: e.offsetX, y: e.offsetY });
 
-        console.log(loc.lat, loc.lon);
         mesh.add(loc.lat, loc.lon);
-		// mesh.add()
 	});
 
 	// this is tied to a global submit button for now
