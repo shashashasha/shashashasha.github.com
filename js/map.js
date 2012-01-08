@@ -119,10 +119,12 @@ sb.map = function(frame, width, height) {
 		};
 	};
 
+	// location to point converter
 	self.l2p = function(loc) {
 		return self.map.locationPoint(loc);
 	};
 
+	// point to location converter
 	self.p2l = function(pt) {
 		return self.map.pointLocation(pt);
 	};

@@ -19,12 +19,11 @@
                 text-align: center;
             }
 
-            #map {
-                position: absolute;
-                top: 150px;
-                opacity: .5;
-                width: 800px;
-                height: 800px;
+            .frame {
+                float: left;
+                margin: 20px;
+                width: 400px;
+                height: 400px;
             }
         </style>
     </head>
@@ -33,117 +32,10 @@
         <input type="text" id="coords" />
         <div id="submit">click me rawr</div>
         <div id="output">click to output</div>
-        <div id="map"></div>
+        <div id="map" class="frame"></div>
     </body>
-    <script>
-        var main = d3.select("body").append("div")
-            .attr("id","svg")
-            .append("svg:svg")
-            .attr("width","800px")
-            .attr("height","800px");
-
-        var points = [], lat = [], lon = [];
-
-        var g = main.append("svg:g")
-                .attr("id","delaunay");
-
-        var targetLat = 0;
-        var targetLon = 0;
-        var updateInterval = 0;
-
-        function update(){
-            g.selectAll("path")
-                .data(d3.geom.delaunay(points))
-                .enter().append("svg:path")
-                .attr("opacity",0);
-
-            mappu.updateBounds(lat, lon);
-
-            var bounds = mappu.getBounds();
-
-            var x = d3.scale.linear()
-                    .domain([d3.min(lon), d3.max(lon)])
-                    .range([bounds.l, bounds.r]);
-            var y = d3.scale.linear()
-                    .domain([d3.max(lat), d3.min(lat)])
-                    .range([bounds.b, bounds.t]);
-
-            // console.log(d3.min(lon),d3.max(lon),d3.min(lat),d3.max(lat));
-
-            g.selectAll("path") // .transition().duration(500)
-                .attr("opacity",1)
-                .attr("d", function(d) {
-                    var l = d.length;
-                    var draw = [];
-                    for (var i = 0; i < l; i++){
-                        var loc = {
-                            lat: parseFloat(d[i][1]),
-                            lon: parseFloat(d[i][0])
-                        };
-
-                        var pt = mappu.map.locationPoint(loc);
-
-                        // draw.push([x(d[i][0]),y(d[i][1])]);
-                        draw.push([pt.x, pt.y]);
-                    } 
-                    return "M" + draw.join("L") + "Z"; 
-                });    
-                
-            var last = points[points.length-1];
-            if (Math.abs(last[0] - targetLon) > .001) {
-                last[0] += (targetLon - last[0]) / 5;
-            }    
-            if (Math.abs(last[1] - targetLat) > .001) {
-                last[1] += (targetLat - last[1]) / 5;
-            }    
-
-            points[points.length - 1] = last;
-            
-            if (Math.abs(last[1] - targetLat) < .002 && Math.abs(last[0] - targetLon) < .002) {
-                console.log('less than min');
-                clearInterval(updateInterval);
-            }
-            console.log(last, targetLat, targetLon);
-
-        }
-
-        function addPoint(latitude, longitude) {
-            targetLat = parseFloat(latitude);
-            targetLon = parseFloat(longitude)
-            lat.push(targetLat);
-            lon.push(targetLon);
-            if (points.length) {
-                var last = points[points.length-1];
-                points.push([last[0], last[1]]);  
-                updateInterval = setInterval(update, 60);
-            } else {
-                points.push([longitude, latitude]);
-                update();
-            }
-        }
-
-        $("#output").click(function(){
-            var code = $("#svg").html();
-            $("body").append($("<div>").text(code));
-        })
-
-        $("#submit").click(function(){
-            var input = $("#coords").val();
-            var coords = [(Math.random() * 8) + 33, -120 + (Math.random() * 10)];// input.split(","); // 
-            
-            //points.push([Math.random() * 900, Math.random() * 400])            
-            // main.append("svg:text").text(input).attr("x",x(coords[1])).attr("y",y(coords[0]));
-            addPoint(coords[1], coords[0]);
-        });
-
-        $("#map").click(function(e) {
-            var loc = mappu.map.pointLocation({ x: e.offsetX, y: e.offsetY });
-
-            console.log(loc.lat, loc.lon);
-            addPoint(loc.lat, loc.lon);
-
-        });
-    </script>
     <script type="text/javascript" src="js/mesh.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/meshu.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </html>
