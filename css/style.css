@@ -8,7 +8,30 @@ body {
     height: 100%;
 }
 
+.button {
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 2px;
+    margin: 4px 0;
+    width: 150px;
+    text-align: center;
+}
+
+.frame {
+	float: left;
+	margin: 20px;
+	width: 400px;
+	height: 400px;
+}
+
+/* 
+	SVG Styling
+*/
 path {
     fill: transparent;
     stroke: black;
+}
+
+circle {
+	cursor: pointer;
 }

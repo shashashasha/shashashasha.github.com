@@ -25,6 +25,26 @@ sb.mesh = function(frame, map, width, height) {
             .data(d3.geom.delaunay(points))
             .enter().append("svg:path");
 
+        g.selectAll("circle")
+            .data(points)
+            .enter().append("svg:circle");
+
+        g.selectAll("circle")
+            .attr("r", 10)
+            .attr("cx", function(d) {
+                console.log(d, map.l2p(d));
+                return map.l2p({
+                    lat: d[1],
+                    lon: d[0]
+                }).x;
+            })
+            .attr("cy", function(d) {
+                return map.l2p({
+                    lat: d[1],
+                    lon: d[0]
+                }).y;
+            });
+
         g.selectAll("path")
             .attr("d", function(d) {
                 var l = d.length;
