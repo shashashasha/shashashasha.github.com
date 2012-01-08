@@ -17,6 +17,14 @@ body {
     text-align: center;
 }
 
+.maybe-place {
+    color: grey;
+    cursor: pointer;
+}
+.maybe-place:hover {
+    color: black;
+}
+
 .frame {
 	float: left;
 	margin: 20px;
