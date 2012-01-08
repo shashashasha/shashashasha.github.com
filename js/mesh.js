@@ -68,11 +68,8 @@ sb.mesh = function(frame, map, width, height) {
 
         // delete the point if we mouseup on a point 
         if (!moved && dragging) {
-            var index = points.indexOf(dragging);
-            
-            points.splice(index, 1);
-            lats.splice(index, 1);
-            lons.splice(index, 1);
+            var index = points.indexOf(point);
+            self.remove(index);
 
             update();
         } else {
@@ -189,6 +186,13 @@ sb.mesh = function(frame, map, width, height) {
         }
 
         return self;
+    };
+
+    self.remove = function(index) {
+        
+        points.splice(index, 1);
+        lats.splice(index, 1);
+        lons.splice(index, 1);
     };
 
     self.lats = function() {
