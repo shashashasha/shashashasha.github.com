@@ -6,12 +6,6 @@ sb.meshu = function(frame) {
 		map = sb.map(frame),
 		mesh = sb.mesh(frame, map);
 
-	$(frame).click(function(e) {
-        var loc = map.p2l({ x: e.offsetX, y: e.offsetY });
-
-        mesh.add(loc.lat, loc.lon);
-	});
-
 	// this is tied to a global submit button for now
     $("#submit").click(function(){
         var input = $("#coords").val();

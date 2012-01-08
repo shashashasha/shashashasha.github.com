@@ -22,7 +22,7 @@ sb.mesh = function(frame, map, width, height) {
         selected = null,
         dragging = null;
 
-    d3.select(window)
+    d3.select(frame)
         .on("mousemove", mousemove)
         .on("mouseup", mouseup);
 
@@ -44,11 +44,23 @@ sb.mesh = function(frame, map, width, height) {
 
     function mouseup() {
         if (!dragging) {
+            var m = d3.svg.mouse(main.node());
+            var loc = map.p2l({
+                x: m[0],
+                y: m[1]
+            });
+
+            self.add(loc.lat, loc.lon);
             return;
         }
 
         mousemove();
         dragging = null;
+        
+        if (d3.event) {
+          d3.event.preventDefault();
+          d3.event.stopPropagation();
+        }
     }
 
     function update(){
