@@ -25,6 +25,23 @@ body {
     color: black;
 }
 
+#places {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+}
+
+.place .delete {
+    display: none;
+    margin-left: 15px;
+    color: red;
+    cursor: pointer;
+}
+.place:hover .delete {
+    display: inline;
+}
+
 .frame {
 	float: left;
 	margin: 20px;

@@ -17,20 +17,21 @@ sb.meshu = function(frame) {
             success: function(data){
                 var results = data.ResultSet.Results;
                 $("#cases").empty();
+                console.log(results);
 
                 if (results.length == 1)
-                    addPoint(results[0].latitude,results[0].longitude);
+                    addPoint(results[0],input);
                 else {
                     for (var i = 0; i < results.length; i++) {
                         var r = results[i];
                         $("<p>").text(r.city+", "+r.state+", "+r.country)
                             .addClass("maybe-place")
-                            .data({"latitude":r.latitude,"longitude":r.longitude})
+                            .data({"place":r})
                             .appendTo("#cases");
                     }
                     $("#cases p").click(function(){
                         var r = $(this);
-                        addPoint(r.data("latitude"),r.data("longitude"));
+                        addPoint(r.data("place"),input);
                         $("#cases").empty();
                     });
                 }
@@ -41,9 +42,13 @@ sb.meshu = function(frame) {
         //var coords = [(Math.random() * 140) - 70, -180 + (Math.random() * 360)];
     });
 
-    function addPoint(lat,lon) {
-        mesh.add(lat,lon);
+    function addPoint(place, input) {
+        mesh.add(place.latitude,place.longitude);
         map.updateBounds(mesh.lats(), mesh.lons());
+        $("<p>").addClass("place")
+            .append($("<span>").text(input))
+            .append($("<span>").text("x").addClass("delete"))
+            .appendTo("#places");
     }
 
 	// this is tied to a global output button for now
