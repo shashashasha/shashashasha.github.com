@@ -26,7 +26,7 @@ sb.meshu = function(frame) {
                         var r = results[i];
                         $("<p>").text(r.city+", "+r.state+", "+r.country)
                             .addClass("maybe-place")
-                            .data({"place":r})
+                            .data("place",r)
                             .appendTo("#cases");
                     }
                     $("#cases p").click(function(){
@@ -48,6 +48,7 @@ sb.meshu = function(frame) {
         $("<p>").addClass("place")
             .append($("<span>").text(input))
             .append($("<span>").text("x").addClass("delete"))
+            .data("place",place)
             .appendTo("#places");
     }
 
