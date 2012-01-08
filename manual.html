@@ -5,33 +5,13 @@
         <script type="text/javascript" src="lib/d3.js"></script>
         <script type="text/javascript" src="lib/d3.geom.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <style type="text/css">
-            path{
-                stroke: black;
-                fill: transparent;
-            }
-            #submit, #output {
-                cursor: pointer;
-                border: 1px solid black;
-                padding: 2px;
-                margin: 4px 0;
-                width: 150px;
-                text-align: center;
-            }
-
-            .frame {
-                float: left;
-                margin: 20px;
-                width: 400px;
-                height: 400px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
     <body>
         <h2>meshu</h2>
         <input type="text" id="coords" />
-        <div id="submit">click me rawr</div>
-        <div id="output">click to output</div>
+        <div id="submit" class="button">click me rawr</div>
+        <div id="output" class="button">click to output</div>
         <div id="map" class="frame"></div>
     </body>
     <script type="text/javascript" src="js/mesh.js"></script>

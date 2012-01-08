@@ -36,10 +36,18 @@ body {
 	SVG Styling
 */
 path {
-    fill: transparent;
+    fill: none;
     stroke: black;
+    pointer-events: none;
 }
 
 circle {
+	fill: black;
+	fill-opacity: 0;
+}
+
+circle:hover {
+	fill: black;
+	fill-opacity: 1;
 	cursor: pointer;
 }

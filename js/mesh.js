@@ -18,7 +18,38 @@ sb.mesh = function(frame, map, width, height) {
     	lats = [], 
     	lons = [],
     	new_pt = [],
-    	updateInterval = 0;
+    	updateInterval = 0,
+        selected = null,
+        dragging = null;
+
+    d3.select(window)
+        .on("mousemove", mousemove)
+        .on("mouseup", mouseup);
+
+    function mousemove() {
+        if (!dragging) {
+            return;
+        }
+
+        var m = d3.svg.mouse(main.node());
+        var l = map.p2l({
+            x: m[0],
+            y: m[1]
+        });
+        dragging[0] = l.lon;
+        dragging[1] = l.lat;
+        
+        update();
+    }
+
+    function mouseup() {
+        if (!dragging) {
+            return;
+        }
+
+        mousemove();
+        dragging = null;
+    }
 
     function update(){
         g.selectAll("path")
@@ -27,12 +58,15 @@ sb.mesh = function(frame, map, width, height) {
 
         g.selectAll("circle")
             .data(points)
-            .enter().append("svg:circle");
+            .enter()
+                .append("svg:circle")
+                .on("mousedown", function(d) {
+                    selected = dragging = d;
+                });
 
         g.selectAll("circle")
             .attr("r", 10)
             .attr("cx", function(d) {
-                console.log(d, map.l2p(d));
                 return map.l2p({
                     lat: d[1],
                     lon: d[0]
