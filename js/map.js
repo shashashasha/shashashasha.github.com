@@ -19,7 +19,7 @@ sb.map = function(frame, width, height) {
 	    
 	self.map = po.map()
 		.container(container.appendChild(po.svg("svg")))
-		.zoom(13)
+		.zoom(12)
 		.center({ lat: 37.755, lon: -122.445 });
 	
 	self.map.add(image);
@@ -43,7 +43,11 @@ sb.map = function(frame, width, height) {
 	};
 
 	self.updateBounds = function(lats, lons) {
-		if (lats.length < 3 || lons.length < 3) {
+		if (lats.length == 1 && lons.length == 1) {
+			self.map.center({
+				lat: lats[0],
+				lon: lons[0]
+			}).zoom(10);
 			return;
 		}
 

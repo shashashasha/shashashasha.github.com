@@ -13,6 +13,15 @@ sb.mesh = function(frame, map, width, height) {
 
     var g = main.append("svg:g")
             .attr("id","delaunay");
+    
+    var uiFrame = d3.select(frame || "body").append("div")
+        .attr("style", "position:absolute;z-index:1337;")
+        .append("svg:svg")
+        .attr("width", width || "400px")
+        .attr("height", height || "400px");
+
+    var ui = uiFrame.append("svg:g")
+        .attr("id", "delaunay-ui");
 
     var points = [], 
     	lats = [], 
@@ -20,6 +29,7 @@ sb.mesh = function(frame, map, width, height) {
     	new_pt = [],
     	updateInterval = 0,
         selected = null,
+        moved = false,
         dragging = null;
 
     d3.select(frame)
@@ -40,6 +50,8 @@ sb.mesh = function(frame, map, width, height) {
         dragging[1] = l.lat;
         
         update();
+
+        moved = true;
     }
 
     function mouseup() {
@@ -54,30 +66,42 @@ sb.mesh = function(frame, map, width, height) {
             return;
         }
 
-        mousemove();
-        dragging = null;
-        
+        // delete the point if we mouseup on a point 
+        if (!moved && dragging) {
+            var index = points.indexOf(dragging);
+            
+            points.splice(index, 1);
+            lats.splice(index, 1);
+            lons.splice(index, 1);
+
+            update();
+        } else {
+            mousemove();
+        }
+
         if (d3.event) {
           d3.event.preventDefault();
           d3.event.stopPropagation();
         }
+
+        moved = false;
+        dragging = null;
     }
 
     function update(){
-        g.selectAll("path")
-            .data(d3.geom.delaunay(points))
-            .enter().append("svg:path");
+        // the transparent circles that serve as ui, allowing for dragging and deleting
+        var circles = ui.selectAll("circle")
+            .data(points);
 
-        g.selectAll("circle")
-            .data(points)
-            .enter()
+        circles.enter()
                 .append("svg:circle")
                 .on("mousedown", function(d) {
                     selected = dragging = d;
                 });
+        
+        circles.exit().remove();
 
-        g.selectAll("circle")
-            .attr("r", 10)
+        circles.attr("r", 6)
             .attr("cx", function(d) {
                 return map.l2p({
                     lat: d[1],
@@ -91,8 +115,14 @@ sb.mesh = function(frame, map, width, height) {
                 }).y;
             });
 
-        g.selectAll("path")
-            .attr("d", function(d) {
+        // the delaunay mesh paths
+        var lines = g.selectAll("path")
+            .data(d3.geom.delaunay(points));
+
+        lines.enter().append("svg:path");
+        lines.exit().remove();
+        
+        lines.attr("d", function(d) {
                 var l = d.length;
                 var draw = [];
                 for (var i = 0; i < l; i++){
@@ -108,7 +138,8 @@ sb.mesh = function(frame, map, width, height) {
                 } 
                 return "M" + draw.join("L") + "Z"; 
             });
-
+        
+        // we move the newest point closer and closer to its destination
         if (new_pt) {
 	        var last = points[points.length-1];
 	        if (Math.abs(last[0] - new_pt[0]) > .0003) {
@@ -120,7 +151,9 @@ sb.mesh = function(frame, map, width, height) {
 
 	        points[points.length - 1] = last;
 	        
-	        if (Math.abs(last[1] - new_pt[1]) < .0005 && Math.abs(last[0] - new_pt[0]) < .0005) {
+            var dlon = Math.abs(last[0] - new_pt[0]);
+            var dlat = Math.abs(last[1] - new_pt[1]);
+	        if (dlat < .0005 && dlon < .0005) {
 	            clearInterval(updateInterval);
 	            new_pt = null;
 	        }	
