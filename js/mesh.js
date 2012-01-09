@@ -76,6 +76,7 @@ sb.mesh = function(frame, map, width, height) {
             self.remove(index);
 
             update();
+            map.updateBounds(lats, lons);
         } else {
             mousemove();
         }
