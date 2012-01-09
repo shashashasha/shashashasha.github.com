@@ -1,74 +1,24 @@
+<!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	<script src="js/d3.js"></script>
-	<script src="js/d3.geom.js"></script>
-</head>
-<body>
+    <head>
+        <script type="text/javascript" src="lib/polymaps.js"></script>
+        <script type="text/javascript" src="lib/d3.js"></script>
+        <script type="text/javascript" src="lib/d3.geom.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+    </head>
+    <body>
+        <h2>meshu</h2>
+        <input type="text" id="coords" />
+        <div id="submit" class="button">click me rawr</div>
+        <div id="output" class="button">click to output</div>
+        <div id="cases"></div>
 
-<script type="text/javascript">
-
-$(function() {
-	var hash = window.location.hash,
-		token = hash.split('=').pop(),
-		api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
-		url = api.replace('{token}', token).replace('{v}', '20111204');
-
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success: function(data) {
-            var checkins = data.response.checkins.items;
-
-            points = [];
-
-            var lat = d3.scale.linear()
-                        .domain([40,30])
-                        .range([0,300]);
-            var lon = d3.scale.linear()
-                        .domain([-122, -60])
-                        .range([0,900]);
-
-            $.each(checkins, function(i, e) {
-                var pt = [lon(parseFloat(e.venue.location.lng)), lat(e.venue.location.lat)];
-                points.push(pt);
-            });
-
-            console.log('points loaded:', points);
-
-            update();
-        }
-	});
-});
-
-var main = d3.select("body").append("div")
-            .attr("id","svg")
-            .append("svg:svg")
-            .attr("width","900px")
-            .attr("height","400px");
-
-var points;
-
-var g = main.append("svg:g")
-        .attr("id","delaunay");
-
-function update(){
-    g.selectAll("path")
-    .data(d3.geom.delaunay(points))
-    .enter().append("svg:path");
-
-    g.selectAll("path")
-        .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
-}
-
-$("#output").click(function(){
-    var code = $("#svg").html();
-    $("body").append($("<div>").text(code));
-})
-
-</script>
-
-</body>
+        <div class="frame"></div>
+        <div id="places"></div>
+    </body>
+    <script type="text/javascript" src="js/mesh.js"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/meshu.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </html>
