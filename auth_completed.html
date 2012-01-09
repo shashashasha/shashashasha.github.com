@@ -1,74 +1,80 @@
 <html>
 <head>
 	<title></title>
+    <script type="text/javascript" src="lib/polymaps.js"></script>
+    <script type="text/javascript" src="lib/d3.js"></script>
+    <script type="text/javascript" src="lib/d3.geom.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	<script src="js/d3.js"></script>
-	<script src="js/d3.geom.js"></script>
+    <script src="js/mesh.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/meshu.js"></script>
 </head>
 <body>
+    <h2>meshu</h2>
+    <input type="text" id="coords" />
+    <div id="submit" class="button">click me rawr</div>
+    <div id="output" class="button">click to output</div>
+    <div id="cases"></div>
+    <div id="maps"></div>
+    <div id="places"></div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-$(function() {
-	var hash = window.location.hash,
-		token = hash.split('=').pop(),
-		api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
-		url = api.replace('{token}', token).replace('{v}', '20111204');
+        $(function() {
 
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success: function(data) {
-            var checkins = data.response.checkins.items;
+        	var hash = window.location.hash,
+        		token = hash.split('=').pop(),
+        		api = "https://api.foursquare.com/v2/users/self/checkins?oauth_token={token}&v={v}&limit=250",
+        		url = api.replace('{token}', token).replace('{v}', '20120102');
 
-            points = [];
+        	$.ajax({
+        		url: url,
+        		dataType: 'json',
+        		success: function(data) {
+                    var checkins = data.response.checkins.items;
+                    var locations = [];
 
-            var lat = d3.scale.linear()
-                        .domain([40,30])
-                        .range([0,300]);
-            var lon = d3.scale.linear()
-                        .domain([-122, -60])
-                        .range([0,900]);
+                    var cities = {};
 
-            $.each(checkins, function(i, e) {
-                var pt = [lon(parseFloat(e.venue.location.lng)), lat(e.venue.location.lat)];
-                points.push(pt);
-            });
+                    $.each(checkins, function(i, e) {
+                        var location = {
+                            lat: e.venue.location.lat,
+                            lon: e.venue.location.lng,
+                            name: e.venue.name
+                        };
 
-            console.log('points loaded:', points);
+                        console.log('adding', e.venue.location.city, e.venue.name);
+                        if (e.venue.location.city) {
+                            var city = e.venue.location.city;
+                            if (!cities[city]) {
+                                cities[city] = {
+                                    name: city,
+                                    locations: []
+                                };    
+                            }
 
-            update();
-        }
-	});
-});
+                            cities[city].locations.push(location);
+                        }
+                    });
 
-var main = d3.select("body").append("div")
-            .attr("id","svg")
-            .append("svg:svg")
-            .attr("width","900px")
-            .attr("height","400px");
+                    $.each(cities, function(i, e) {
+                        if (e.locations.length <= 2) {
+                            console.log("ignoring", e.name, "too few checkins!");
+                            return;
+                        }
 
-var points;
+                        var frame = $("<div>").addClass("frame");
+                        $("#maps").append(frame);
 
-var g = main.append("svg:g")
-        .attr("id","delaunay");
+                        var meshu = sb.meshu(frame[0]);
+                        console.log('points loaded:', e.locations);
+                        meshu.locations(e.locations); 
+                    });
+                }
+        	});
+        });
 
-function update(){
-    g.selectAll("path")
-    .data(d3.geom.delaunay(points))
-    .enter().append("svg:path");
-
-    g.selectAll("path")
-        .attr("d", function(d) { return "M" + d.join("L") + "Z"; });
-}
-
-$("#output").click(function(){
-    var code = $("#svg").html();
-    $("body").append($("<div>").text(code));
-})
-
-</script>
-
+    </script>
 </body>
 </html>
