@@ -140,6 +140,7 @@ sb.mesh = function(frame, map, width, height) {
                 return "M" + draw.join("L") + "Z"; 
             });
 
+        // place names for the points
         var names = list.selectAll("li.place")
             .data(points);
         
@@ -224,7 +225,7 @@ sb.mesh = function(frame, map, width, height) {
 
     self.places = function() {
         return places;
-    }
+    };
 
     self.points = function(pts) {
     	if (!arguments.length) {
