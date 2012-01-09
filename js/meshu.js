@@ -43,13 +43,8 @@ sb.meshu = function(frame) {
     });
 
     function addPoint(place, input) {
-        mesh.add(place.latitude,place.longitude);
+        mesh.add(place.latitude,place.longitude, input);
         map.updateBounds(mesh.lats(), mesh.lons());
-        $("<p>").addClass("place")
-            .append($("<span>").text(input))
-            .append($("<span>").text("x").addClass("delete"))
-            .data("place",place)
-            .appendTo("#places");
     }
 
 	// this is tied to a global output button for now

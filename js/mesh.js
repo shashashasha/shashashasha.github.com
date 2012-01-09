@@ -23,9 +23,13 @@ sb.mesh = function(frame, map, width, height) {
     var ui = uiFrame.append("svg:g")
         .attr("id", "delaunay-ui");
 
+    var list = d3.select("#places")
+                .append("ul");
+
     var points = [], 
     	lats = [], 
     	lons = [],
+        places = [],
     	new_pt = [],
     	updateInterval = 0,
         selected = null,
@@ -135,6 +139,16 @@ sb.mesh = function(frame, map, width, height) {
                 } 
                 return "M" + draw.join("L") + "Z"; 
             });
+
+        var names = list.selectAll("li.place")
+            .data(points);
+        
+        names.enter().append("li").attr("class","place");
+        names.exit().remove();
+
+        names.text(function(d,i){
+            return places[i];   
+        });
         
         // we move the newest point closer and closer to its destination
         if (new_pt) {
@@ -159,7 +173,7 @@ sb.mesh = function(frame, map, width, height) {
         }
     };
 
-    self.add = function(latitude, longitude) {
+    self.add = function(latitude, longitude, placename) {
     	// clear previous update
     	if (updateInterval) {
             clearInterval(updateInterval);
@@ -170,6 +184,7 @@ sb.mesh = function(frame, map, width, height) {
 
         lats.push(lat);
         lons.push(lon);
+        places.push(placename);
 
         if (points.length) {
         	new_pt = [lon, lat];
@@ -193,6 +208,7 @@ sb.mesh = function(frame, map, width, height) {
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
+        places.splice(index, 1);
     };
 
     self.lats = function() {
@@ -202,6 +218,10 @@ sb.mesh = function(frame, map, width, height) {
     self.lons = function() {
     	return lons;
     };
+
+    self.places = function() {
+        return places;
+    }
 
     self.points = function(pts) {
     	if (!arguments.length) {
