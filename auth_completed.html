@@ -38,7 +38,6 @@
                     var locations = [];
 
                     $.each(checkins, function(i, e) {
-                        var pt = [lon(parseFloat(e.venue.location.lng)), lat(e.venue.location.lat)];
                         var location = {
                             lat: e.venue.location.lat,
                             lon: e.venue.location.lng,
