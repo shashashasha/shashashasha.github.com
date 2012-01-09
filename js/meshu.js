@@ -17,7 +17,6 @@ sb.meshu = function(frame) {
             success: function(data){
                 var results = data.ResultSet.Results;
                 $("#cases").empty();
-                console.log(results);
 
                 if (results.length == 1)
                     addPoint(results[0],input);

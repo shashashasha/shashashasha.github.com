@@ -184,7 +184,10 @@ sb.mesh = function(frame, map, width, height) {
 
         lats.push(lat);
         lons.push(lon);
-        places.push(placename);
+        if (placename == undefined)
+            places.push(latitude.toString().substr(0,6)+", "+longitude.toString().substr(0,6));
+        else
+            places.push(placename);
 
         if (points.length) {
         	new_pt = [lon, lat];

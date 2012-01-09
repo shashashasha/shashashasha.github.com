@@ -53,12 +53,12 @@ sb.map = function(frame, width, height) {
 
 		// south-west, north-east 
 		var extent = [{ 
-			lat: d3.min(lats) - .5,
-			lon: d3.min(lons) - 1
+			lat: d3.min(lats),
+			lon: d3.min(lons)
 		}, 
 		{ 
-			lat: d3.max(lats) + .5,
-			lon: d3.max(lons) + 1
+			lat: d3.max(lats),
+			lon: d3.max(lons)
 		}];
 
 		self.map.extent(extent);
