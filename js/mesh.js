@@ -72,7 +72,7 @@ sb.mesh = function(frame, map, width, height) {
 
         // delete the point if we mouseup on a point 
         if (!moved && dragging) {
-            var index = points.indexOf(point);
+            var index = points.indexOf(dragging);
             self.remove(index);
 
             update();
