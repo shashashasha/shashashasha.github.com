@@ -16,14 +16,12 @@
     <div id="submit" class="button">click me rawr</div>
     <div id="output" class="button">click to output</div>
     <div id="cases"></div>
-
-    <div class="frame"></div>
+    <div id="maps"></div>
     <div id="places"></div>
 
     <script type="text/javascript">
 
         $(function() {
-            var meshu = sb.meshu($("#map")[0]);
 
         	var hash = window.location.hash,
         		token = hash.split('=').pop(),
@@ -37,6 +35,8 @@
                     var checkins = data.response.checkins.items;
                     var locations = [];
 
+                    var cities = {};
+
                     $.each(checkins, function(i, e) {
                         var location = {
                             lat: e.venue.location.lat,
@@ -44,11 +44,22 @@
                             name: e.venue.name
                         };
 
-                        locations.push(location);
+                        console.log('adding', e.venue.location.city, e.venue.name);
+                        if (e.venue.location.city) {
+                            var city = e.venue.location.city;
+                            cities[city].locations = cities[city].locations || [];
+                            cities[city].locations.push(location);
+                        }
                     });
 
-                    console.log('points loaded:', locations);
-                    meshu.locations(locations);
+                    $.each(cities, function(i, e) {
+                        var frame = $("<div>").addClass("frame");
+                        $("#maps").append(frame);
+
+                        var meshu = sb.meshu(frame[0]);
+                        console.log('points loaded:', e.locations);
+                        meshu.locations(e.locations); 
+                    });
                 }
         	});
         });
