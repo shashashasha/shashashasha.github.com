@@ -49,6 +49,7 @@
                             var city = e.venue.location.city;
                             if (!cities[city]) {
                                 cities[city] = {
+                                    name: city,
                                     locations: []
                                 };    
                             }
@@ -58,6 +59,11 @@
                     });
 
                     $.each(cities, function(i, e) {
+                        if (e.locations.length <= 2) {
+                            console.log("ignoring", e.name, "too few checkins!");
+                            return;
+                        }
+
                         var frame = $("<div>").addClass("frame");
                         $("#maps").append(frame);
 
