@@ -51,6 +51,11 @@ sb.meshu = function(frame) {
         $("body").append($("<div>").text(self.output()));
     });
 
+    self.locations = function(locations) {
+        mesh.locations(locations);
+        map.updateBounds(mesh.lats(), mesh.lons());
+    };
+
     // output the contents of our mesh
     self.output = function() {
     	return mesh.output();

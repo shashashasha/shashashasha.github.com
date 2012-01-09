@@ -236,6 +236,24 @@ sb.mesh = function(frame, map, width, height) {
     	return self;
     };
 
+    self.locations = function(locs) {
+        points = [];
+        lats = [];
+        lons = [];
+        places = [];
+        $.each(locs, function(i, loc) {
+           points.push([loc.lon, loc.lat]);
+           lats.push(loc.lat);
+           lons.push(loc.lon);
+           places.push(loc.name);
+        });
+
+        // redraw the mesh with new locations
+        update();
+
+        return self;
+    };
+
     self.output = function() {
     	return $('#' + selfId).html();
     };
