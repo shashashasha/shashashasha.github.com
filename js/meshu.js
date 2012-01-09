@@ -52,8 +52,21 @@ sb.meshu = function(frame) {
     });
 
     self.locations = function(locations) {
-        mesh.locations(locations);
-        map.updateBounds(mesh.lats(), mesh.lons());
+
+        for (var i = 0; i < locations.length; i++) {
+            setTimeout(function() {
+                return function(loc) {
+                    mesh.add(loc.lat, loc.lon, loc.name);
+                    map.updateBounds(mesh.lats(), mesh.lons());                 
+                };
+            }(locations[i]), i * 400);
+        }
+        
+        // mesh.locations(locations);
+        // map.updateBounds(mesh.lats(), mesh.lons());
+
+        // refresh should probably be tied to an event or something
+        // mesh.refresh();
     };
 
     // output the contents of our mesh

@@ -237,6 +237,8 @@ sb.mesh = function(frame, map, width, height) {
     };
 
     self.locations = function(locs) {
+        new_pt = null;
+
         points = [];
         lats = [];
         lons = [];
@@ -252,6 +254,10 @@ sb.mesh = function(frame, map, width, height) {
         update();
 
         return self;
+    };
+
+    self.refresh = function() {
+        update();
     };
 
     self.output = function() {
