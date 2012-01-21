@@ -103,7 +103,8 @@ sb.mesh = function(frame, map, width, height) {
         
         circles.exit().remove();
 
-        circles.attr("r", 6)
+        circles.attr("id",function(d,i){ return "c-"+i; })
+            .attr("r", 6)
             .attr("cx", function(d) {
                 return map.l2p({
                     lat: d[1],
@@ -116,6 +117,13 @@ sb.mesh = function(frame, map, width, height) {
                     lon: d[0]
                 }).y;
             });
+
+        circles.on("mouseover",function(d,i){
+            list.select("#p-"+i).attr("class","place highlight");
+        });
+        circles.on("mouseout",function(d,i){
+            list.select("#p-"+i).attr("class","place");
+        });
 
         // the delaunay mesh paths
         var lines = g.selectAll("path")
@@ -145,11 +153,28 @@ sb.mesh = function(frame, map, width, height) {
         var names = list.selectAll("li.place")
             .data(points);
         
-        names.enter().append("li").attr("class","place");
+        var place = names.enter().append("li").attr("class","place");
+        place.append("span").attr("class","name");
+        place.append("span").attr("class","delete").text("x");
         names.exit().remove();
 
-        names.text(function(d,i){
-            return places[i];   
+        names.attr("id",function(d,i){ return "p-"+i; })
+            .select(".name")
+            .text(function(d,i){
+                return places[i];   
+            });
+
+        names.select(".delete").on("click",function(d,i){
+            self.remove(i);
+            update();
+            map.updateBounds(lats, lons);
+        });
+
+        names.on("mouseover",function(d,i){
+            ui.select("#c-"+i).attr("class","highlight");
+        });
+        names.on("mouseout",function(d,i){
+            ui.select("#c-"+i).attr("class","");
         });
         
         // we move the newest point closer and closer to its destination

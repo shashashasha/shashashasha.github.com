@@ -36,6 +36,9 @@ body {
 .place:hover .delete {
     display: inline;
 }
+.place.highlight {
+    color: red;
+}
 
 .frame {
 	float: left;
@@ -62,4 +65,8 @@ circle:hover {
 	fill: black;
 	fill-opacity: 1;
 	cursor: pointer;
+}
+circle.highlight {
+    fill: red;
+    fill-opacity: 1;
 }
