@@ -153,12 +153,21 @@ sb.mesh = function(frame, map, width, height) {
         var names = list.selectAll("li.place")
             .data(points);
         
-        names.enter().append("li").attr("class","place");
+        var place = names.enter().append("li").attr("class","place");
+        place.append("span").attr("class","name");
+        place.append("span").attr("class","delete").text("x");
         names.exit().remove();
 
         names.attr("id",function(d,i){ return "p-"+i; })
-        .text(function(d,i){
-            return places[i];   
+            .select(".name")
+            .text(function(d,i){
+                return places[i];   
+            });
+
+        names.select(".delete").on("click",function(d,i){
+            self.remove(i);
+            update();
+            map.updateBounds(lats, lons);
         });
 
         names.on("mouseover",function(d,i){
