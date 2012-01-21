@@ -1,1 +1,30 @@
-<svg width="400px" height="400px"><g id="delaunay"><path d="M308.4958050586671,218.72804444819857L289.0929687530649,204.69093415451212L327.957722419918,177.8686386748516Z"></path><path d="M308.4958050586671,218.72804444819857L327.957722419918,177.8686386748516L359.5813534087,176.79104823844597Z"></path><path d="M308.4958050586671,218.72804444819857L359.5813534087,176.79104823844597L399.9724820660871,191.63088335763896Z"></path><path d="M58.19443401143002,263.1757914879821L0.025759567720712084,241.63009589582282L73.49374461493545,226.76138215466395Z"></path><path d="M85.80992448371417,264.8603119385237L58.19443401143002,263.1757914879821L73.49374461493545,226.76138215466395Z"></path><path d="M85.80992448371417,264.8603119385237L73.49374461493545,226.76138215466395L179.07648981767585,135.12260451094375Z"></path><path d="M85.80992448371417,264.8603119385237L179.07648981767585,135.12260451094375L289.0929687530649,204.69093415451212Z"></path><path d="M85.80992448371417,264.8603119385237L289.0929687530649,204.69093415451212L308.4958050586671,218.72804444819857Z"></path><path d="M289.0929687530649,204.69093415451212L179.07648981767585,135.12260451094375L327.957722419918,177.8686386748516Z"></path><path d="M0.025759567720712084,241.63009589582282L179.07648981767585,135.12260451094375L73.49374461493545,226.76138215466395Z"></path><path d="M327.957722419918,177.8686386748516L179.07648981767585,135.12260451094375L359.5813534087,176.79104823844597Z"></path></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="400px" height="400px" viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
+<g id="delaunay">
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M334.101,195.327
+		l-13.972-10.108l27.986-19.315L334.101,195.327z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M334.101,195.327
+		l14.015-29.423l22.771-0.776L334.101,195.327z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M334.101,195.327
+		l36.786-30.199l29.086,10.686L334.101,195.327z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M153.859,227.333
+		l-41.887-15.515l52.904-10.707L153.859,227.333z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M173.746,228.546
+		l-19.886-1.213l11.017-26.222L173.746,228.546z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M173.746,228.546
+		l-8.869-27.435l76.03-65.989L173.746,228.546z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M173.746,228.546
+		l67.161-93.423l79.223,50.096L173.746,228.546z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M173.746,228.546
+		l146.383-43.327l13.972,10.108L173.746,228.546z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M320.129,185.219
+		l-79.223-50.096l107.209,30.781L320.129,185.219z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M111.973,211.818
+		l128.934-76.696l-76.03,65.989L111.973,211.818z"/>
+	<path fill="none" stroke="#000000" stroke-width="4.252" stroke-linejoin="round" stroke-miterlimit="10" d="M348.115,165.904
+		l-107.209-30.781l129.98,30.005L348.115,165.904z"/>
+</g>
+</svg>

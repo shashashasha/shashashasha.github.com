@@ -103,7 +103,8 @@ sb.mesh = function(frame, map, width, height) {
         
         circles.exit().remove();
 
-        circles.attr("r", 6)
+        circles.attr("id",function(d,i){ return "c-"+i; })
+            .attr("r", 6)
             .attr("cx", function(d) {
                 return map.l2p({
                     lat: d[1],
@@ -116,6 +117,13 @@ sb.mesh = function(frame, map, width, height) {
                     lon: d[0]
                 }).y;
             });
+
+        circles.on("mouseover",function(d,i){
+            list.select("#p-"+i).attr("class","place highlight");
+        });
+        circles.on("mouseout",function(d,i){
+            list.select("#p-"+i).attr("class","place");
+        });
 
         // the delaunay mesh paths
         var lines = g.selectAll("path")
@@ -148,8 +156,16 @@ sb.mesh = function(frame, map, width, height) {
         names.enter().append("li").attr("class","place");
         names.exit().remove();
 
-        names.text(function(d,i){
+        names.attr("id",function(d,i){ return "p-"+i; })
+        .text(function(d,i){
             return places[i];   
+        });
+
+        names.on("mouseover",function(d,i){
+            ui.select("#c-"+i).attr("class","highlight");
+        });
+        names.on("mouseout",function(d,i){
+            ui.select("#c-"+i).attr("class","");
         });
         
         // we move the newest point closer and closer to its destination
