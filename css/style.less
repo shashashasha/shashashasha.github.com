@@ -282,3 +282,41 @@ circle:hover, circle.highlight {
     fill-opacity: 1;
     cursor: pointer;
 }
+
+
+li.object {
+    display: inline-block;
+    border: 1px solid @grey;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: -3px;
+}
+li.object .image {
+    width: 238px;
+    height: 290px;
+    border: 5px solid white;
+}
+li.object:hover .image {
+    border: 5px solid @blue;
+}
+li.object .description {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    color: @grey;
+}
+li.object:hover .description {
+    color: black;
+}
+li.object .detail {
+    background-color: @pink;
+    color: white;
+    position: absolute;
+    padding: 3px 6px;
+    right: 10px;
+    bottom: 35px;
+    display: none;
+}
+li.object:hover .detail {
+    display: block;
+}

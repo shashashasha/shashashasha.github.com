@@ -1,22 +1,14 @@
 $(function() {
 
-	// create a meshu object for every frame class div
-	$(".frame").each(function(i, e) {
-		var meshu = sb.meshu(e);
-	});
-	$("#next").click(function(){
-	    $("#content").addClass("materials")
-	});
-	$("#back").click(function(){
-	    $("#content").removeClass("materials")
-	});
-	$(".option-list li").click(function(){
-		$(this).parent().find("li").removeClass("selected");
-		$(this).addClass("selected");
-	});
-	$("ul.material-list li").click(function(){
-		$(".total-cost").text($(this).find(".price").text());
-	})
+	var desc = ["Japan","European Countries","SE Asia","US Cities","Spain","China"];
 
+	for (var i = 1; i < 9; i++){
+		$("<li>")
+			.attr("class","object")
+			.append($("<div>").addClass("image").css("background-image","url(images/meshu_0"+i+".png)"))
+			.append($("<div>").addClass("description").text(desc[Math.floor(Math.random()*6)]))
+			.append($("<div>").addClass("detail").text("Click for more information"))
+			.appendTo("ul.gallery");
+	}
 	
 });
