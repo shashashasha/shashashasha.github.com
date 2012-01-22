@@ -8,8 +8,8 @@ sb.mesh = function(frame, map, width, height) {
         .attr("id", selfId)
         .attr("style", "position:absolute;z-index:100;")
         .append("svg:svg")
-        .attr("width", width || "400px")
-        .attr("height", height || "400px");
+        .attr("width", $(frame).width())
+        .attr("height", $(frame).height()); // height || "400px");
 
     var g = main.append("svg:g")
             .attr("id","delaunay");

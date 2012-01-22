@@ -1,10 +1,10 @@
 var sb = sb || {};
 var app_key = "dj0yJmk9M1hsekZBSDY1ZjRxJmQ9WVdrOU5uUjZiRzE0TXpRbWNHbzlNVEV5TURZMU1qRTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD00OQ--";
 
-sb.meshu = function(frame) {
+sb.meshu = function(frame, width, height) {
 	var self = {},
-		map = sb.map(frame),
-		mesh = sb.mesh(frame, map);
+		map = sb.map(frame, width, height),
+		mesh = sb.mesh(frame, map, width, height);
 
 	// this is tied to a global submit button for now
     $("#submit").click(function(){
