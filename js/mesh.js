@@ -104,7 +104,7 @@ sb.mesh = function(frame, map, width, height) {
         circles.exit().remove();
 
         circles.attr("id",function(d,i){ return "c-"+i; })
-            .attr("r", 6)
+            .attr("r", 5)
             .attr("cx", function(d) {
                 return map.l2p({
                     lat: d[1],
@@ -140,10 +140,7 @@ sb.mesh = function(frame, map, width, height) {
                         lat: parseFloat(d[i][1]),
                         lon: parseFloat(d[i][0])
                     };
-
                     var pt = map.l2p(loc);
-
-                    // draw.push([x(d[i][0]),y(d[i][1])]);
                     draw.push([pt.x, pt.y]);
                 } 
                 return "M" + draw.join("L") + "Z"; 
@@ -154,8 +151,8 @@ sb.mesh = function(frame, map, width, height) {
             .data(points);
         
         var place = names.enter().append("li").attr("class","place");
-        place.append("span").attr("class","name");
-        place.append("span").attr("class","delete").text("x");
+            place.append("span").attr("class","name");
+            place.append("span").attr("class","delete").text("x");
         names.exit().remove();
 
         names.attr("id",function(d,i){ return "p-"+i; })
@@ -212,7 +209,7 @@ sb.mesh = function(frame, map, width, height) {
         lats.push(lat);
         lons.push(lon);
         if (placename == undefined)
-            places.push(latitude.toString().substr(0,6)+", "+longitude.toString().substr(0,6));
+            places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
         else
             places.push(placename);
 
