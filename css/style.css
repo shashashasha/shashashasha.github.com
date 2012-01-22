@@ -3,13 +3,38 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+h1#meshu {
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+#content {
+    width: 1000px;
+    margin: 0 auto;
+    border: 1px solid #888;
+    min-height: 600px;
+}
+
+#text {
+    padding: 20px;
+}
+
+input {
+    width: 200px;
+    color: #888;
+    border: 1px solid #0cf;
+    padding: 5px;
+}
+
 .button {
     cursor: pointer;
-    border: 1px solid black;
-    padding: 2px;
+    background-color: #0cf;
+    color: white;
+    padding: 3px 5px;
     margin: 4px 0;
-    width: 150px;
     text-align: center;
+    display: inline;
 }
 
 .maybe-place {
@@ -21,30 +46,27 @@ body {
 }
 
 #places {
-    position: absolute;
-    top: 0;
-    right: 0;
     width: 400px;
 }
 
 .place .delete {
     display: none;
     margin-left: 15px;
-    color: red;
+    background-color: #FF3FB4;
     cursor: pointer;
+    color: white;
 }
 .place:hover .delete {
     display: inline;
 }
 .place.highlight {
-    color: red;
+    color: #FF3FB4;
 }
 
 .frame {
-	float: left;
-	margin: 20px;
-	width: 400px;
-	height: 400px;
+	width: 600px;
+	height: 600px;
+    float: right;
 }
 
 /* 
@@ -54,6 +76,8 @@ path {
     fill: none;
     stroke: black;
     pointer-events: none;
+    stroke-width: 3;
+    stroke-linejoin: round;
 }
 
 circle {
@@ -67,6 +91,6 @@ circle:hover {
 	cursor: pointer;
 }
 circle.highlight {
-    fill: red;
+    fill: #FF3FB4;
     fill-opacity: 1;
 }

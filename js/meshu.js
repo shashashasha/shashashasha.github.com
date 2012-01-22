@@ -16,8 +16,10 @@ sb.meshu = function(frame) {
             cache: false,
             success: function(data){
                 var results = data.ResultSet.Results;
-                $("#cases").empty();
+                var cases = $("#cases");
+                cases.empty().hide();
 
+                //if (results == undefined) XXX: make a 404 "results got bonked" case
                 if (results.length == 1)
                     addPoint(results[0],input);
                 else {
@@ -28,10 +30,11 @@ sb.meshu = function(frame) {
                             .data("place",r)
                             .appendTo("#cases");
                     }
+                    cases.slideDown('fast');
                     $("#cases p").click(function(){
                         var r = $(this);
                         addPoint(r.data("place"),input);
-                        $("#cases").empty();
+                        cases.slideUp('fast');
                     });
                 }
             }

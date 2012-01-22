@@ -9,8 +9,8 @@ sb.map = function(frame, width, height) {
 	var container = d3.select(frame || "body").append("div")[0][0];
       
     container.style.position = "absolute";
-    container.style.width = width || '400px';
-    container.style.height = height || '400px';
+    container.style.width = width || '600px';
+    container.style.height = height || '600px';
 
 	// var container = document.getElementById(selector || "body");
 	var image = po.image()
@@ -43,6 +43,7 @@ sb.map = function(frame, width, height) {
 	};
 
 	self.updateBounds = function(lats, lons) {
+		if (lats.length == 0 || lons.length == 0) return;
 		if (lats.length == 1 && lons.length == 1) {
 			self.map.center({
 				lat: lats[0],
