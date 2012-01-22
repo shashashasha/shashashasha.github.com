@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="lib/polymaps.js"></script>
+        <script type="text/javascript" src="lib/d3.js"></script>
+        <script type="text/javascript" src="lib/d3.geom.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+    </head>
+    <body>
+        <h2>meshu</h2>
+        <input type="text" id="coords" />
+        <div id="submit" class="button">click me rawr</div>
+        <div id="output" class="button">click to output</div>
+        <div id="cases"></div>
+
+        <div id="frame" style="position:absolute; left:0; right:0; bottom:0; top: 150px;"></div>
+        <div id="places"></div>
+    </body>
+    <script type="text/javascript" src="js/mesh.js"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/meshu.js"></script>
+    <script type="text/javascript">
+        $(function() {
+
+        // create a meshu object for every frame class div
+        $("#frame").each(function(i, e) {
+            var meshu = sb.meshu(e, '100%', '100%');
+        });
+        
+    });
+    </script>
+</html>
