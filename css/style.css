@@ -271,16 +271,11 @@ path {
 }
 
 circle {
-	fill: black;
+	fill: #FF3FB4;
 	fill-opacity: 0;
 }
 
-circle:hover {
-	fill: black;
+circle:hover, circle.highlight {
 	fill-opacity: 1;
 	cursor: pointer;
-}
-circle.highlight {
-    fill: #FF3FB4;
-    fill-opacity: 1;
 }

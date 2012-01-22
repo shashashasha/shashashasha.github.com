@@ -93,6 +93,19 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     function updateMesh() {
+        var circles = ui.selectAll("circle");
+        circles.attr("cx", function(d) {
+                return map.l2p({
+                    lat: d[1],
+                    lon: d[0]
+                }).x;
+            })
+            .attr("cy", function(d) {
+                return map.l2p({
+                    lat: d[1],
+                    lon: d[0]
+                }).y;
+            });
         // the delaunay mesh paths
         var lines = g.selectAll("path")
             .data(d3.geom.delaunay(points));
@@ -136,33 +149,19 @@ sb.mesh = function(frame, map, width, height) {
     }
 
     function update(){
-        updateMesh();
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
             .data(points);
 
         circles.enter()
                 .append("svg:circle")
+                .attr("id",function(d,i){ return "c-"+i; })
+                .attr("r", 6)
                 .on("mousedown", function(d) {
                     selected = dragging = d;
                 });
         
         circles.exit().remove();
-
-        circles.attr("id",function(d,i){ return "c-"+i; })
-            .attr("r", 5)
-            .attr("cx", function(d) {
-                return map.l2p({
-                    lat: d[1],
-                    lon: d[0]
-                }).x;
-            })
-            .attr("cy", function(d) {
-                return map.l2p({
-                    lat: d[1],
-                    lon: d[0]
-                }).y;
-            });
 
         circles.on("mouseover",function(d,i){
             list.select("#p-"+i).attr("class","place highlight");
@@ -205,7 +204,8 @@ sb.mesh = function(frame, map, width, height) {
                 var multiple = places.length > 1;
                 return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
             }
-        })
+        });
+        updateMesh();
     };
 
     self.add = function(latitude, longitude, placename) {
