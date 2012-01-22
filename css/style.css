@@ -3,27 +3,25 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
 }
-
 ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
-
 h2 {
     font-weight: normal;
 }
+
+
 
 #top {
     width: 1000px;
     margin: 30px auto 0;
     position: relative;
 }
-
 h1#meshu {
     margin: 0;
 }
-
 #nav {
     position: absolute;
     bottom: 3px;
@@ -43,7 +41,6 @@ h1#meshu {
     position: relative;
     overflow: hidden;
 }
-
 #content h2 {
     font-size: 28px;
     margin: 0 0 10px;
@@ -55,6 +52,8 @@ h1#meshu {
     min-height: 560px;
     position: absolute;
     top: 0;
+}
+.edit #edit {
     left: 0;
     transition: left 1s;
     -moz-transition: left 1s;
@@ -75,7 +74,6 @@ input {
     border: 1px solid #0cf;
     padding: 5px;
 }
-
 .button {
     cursor: pointer;
     background-color: #0cf;
@@ -89,15 +87,9 @@ input {
 #cases {
     margin: 5px 0;
 }
-
-#cases ul, #places ul {
-    font-size: 14px;
-}
-
 #cases li.title {
     margin-bottom: 5px;
 }
-
 .maybe-place {
     color: #808080;
     cursor: pointer;
@@ -109,11 +101,12 @@ input {
 #places {
     margin-top: 40px;
 }
-
 .place {
     color: #808080;
 }
-
+.place.highlight {
+    color: #FF3FB4;
+}
 .place .delete {
     display: none;
     margin-left: 15px;
@@ -125,16 +118,15 @@ input {
 .place:hover .delete {
     display: inline;
 }
-.place.highlight {
-    color: #FF3FB4;
-}
 
 .frame {
 	width: 600px;
 	height: 600px;
     position: absolute;
-    right: 0;
     z-index: 1;
+}
+.edit .frame {
+    right: 0;
     transition: right 1s;
     -moz-transition: right 1s;
     -webkit-transition: right 1s;
@@ -147,7 +139,8 @@ input {
     -webkit-transition: right 1s;
     -o-transition: right 1s;
 }
-.map .layer {
+
+.edit .map .layer {
     opacity: 1;
     transition: opacity 1s;
     -moz-transition: opacity 1s;
@@ -162,40 +155,6 @@ input {
     -o-transition: opacity 1s;
 }
 
-#next, #back, #checkout {
-    background-color: #FF3FB4;
-    color: white;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-#next {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    opacity: 0;
-    transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -webkit-transition: opacity 1s;
-    -o-transition: opacity 1s;
-}
-#back {
-    position: absolute;
-    left: 20px;
-    top: 20px;
-}
-#checkout {
-    position: relative;
-    float: right;;
-    font-size: 20px;
-}
-#next.active {
-    opacity: 1;
-    transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -webkit-transition: opacity 1s;
-    -o-transition: opacity 1s;
-}
-
 #materials {
     padding: 20px;
     position: relative;
@@ -203,6 +162,8 @@ input {
     min-height: 560px;
     position: absolute;
     top: 0;
+}
+.edit #materials {
     right: -400px;
     transition: right 1s;
     -moz-transition: right 1s;
@@ -216,6 +177,7 @@ input {
     -webkit-transition: right 1s;
     -o-transition: right 1s;
 }
+
 #options {
     margin-top: 60px;
 }
@@ -249,6 +211,7 @@ input {
     display: inline;
     color: #808080;
 }
+
 #total {
     display: block;
     width: 100%;
@@ -260,6 +223,40 @@ input {
     float: right;
     font-size: 28px;
     color: #808080;
+}
+
+#next, #back, #checkout-button {
+    background-color: #FF3FB4;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+#next {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    opacity: 0;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+}
+#back {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+#checkout-button {
+    position: relative;
+    float: right;;
+    font-size: 20px;
+}
+#next.active {
+    opacity: 1;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
 }
 
 /* 
