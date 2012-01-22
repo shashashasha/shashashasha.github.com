@@ -16,22 +16,26 @@ sb.meshu = function(frame, width, height) {
             cache: false,
             success: function(data){
                 var results = data.ResultSet.Results;
-                $("#cases").empty();
+                var cases = $("#cases");
+                cases.empty().hide();
 
+                //if (results == undefined) XXX: make a 404 "results got bonked" case
                 if (results.length == 1)
                     addPoint(results[0],input);
                 else {
+                    var list = $("<ul>").append($("<li>").attr("class","title").text("Hrm, did you mean:")).appendTo(cases);
                     for (var i = 0; i < results.length; i++) {
                         var r = results[i];
-                        $("<p>").text(r.city+", "+r.state+", "+r.country)
+                        $("<li>").text(r.city+", "+r.state+", "+r.country)
                             .addClass("maybe-place")
                             .data("place",r)
-                            .appendTo("#cases");
+                            .appendTo(list);
                     }
-                    $("#cases p").click(function(){
+                    cases.slideDown('fast');
+                    $("#cases li").click(function(){
                         var r = $(this);
                         addPoint(r.data("place"),input);
-                        $("#cases").empty();
+                        cases.slideUp('fast');
                     });
                 }
             }

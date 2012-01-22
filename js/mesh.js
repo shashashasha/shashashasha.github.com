@@ -9,7 +9,7 @@ sb.mesh = function(frame, map, width, height) {
         .attr("style", "position:absolute;z-index:100;")
         .append("svg:svg")
         .attr("width", $(frame).width())
-        .attr("height", $(frame).height()); // height || "400px");
+        .attr("height", $(frame).height());
 
     var g = main.append("svg:g")
             .attr("id","delaunay");
@@ -17,14 +17,16 @@ sb.mesh = function(frame, map, width, height) {
     var uiFrame = d3.select(frame || "body").append("div")
         .attr("style", "position:absolute;z-index:1337;")
         .append("svg:svg")
-        .attr("width", width || "400px")
-        .attr("height", height || "400px");
+        .attr("width", width || "600px")
+        .attr("height", height || "600px");
 
     var ui = uiFrame.append("svg:g")
         .attr("id", "delaunay-ui");
 
-    var list = d3.select("#places")
-                .append("ul");
+    var placeList = d3.select("#places");
+    var placeTitle = placeList.append("h2").attr("class","place-number");
+    var list = placeList.append("ul");
+                
 
     var points = [], 
     	lats = [], 
@@ -75,8 +77,8 @@ sb.mesh = function(frame, map, width, height) {
             var index = points.indexOf(dragging);
             self.remove(index);
 
-            update();
             map.updateBounds(lats, lons);
+            update();
         } else {
             mousemove();
         }
@@ -90,7 +92,51 @@ sb.mesh = function(frame, map, width, height) {
         dragging = null;
     }
 
+    function updateMesh() {
+        // the delaunay mesh paths
+        var lines = g.selectAll("path")
+            .data(d3.geom.delaunay(points));
+
+        lines.enter().append("svg:path");
+        lines.exit().remove();
+        lines.attr("d", function(d) {
+                var l = d.length;
+                var draw = [];
+                for (var i = 0; i < l; i++){
+                    var loc = {
+                        lat: parseFloat(d[i][1]),
+                        lon: parseFloat(d[i][0])
+                    };
+                    var pt = map.l2p(loc);
+                    draw.push([pt.x, pt.y]);
+                } 
+                return "M" + draw.join("L") + "Z"; 
+            });
+        // we move the newest point closer and closer to its destination
+        if (new_pt) {
+            var last = points[points.length-1];
+            if (Math.abs(last[0] - new_pt[0]) > .0003) {
+                last[0] += (new_pt[0] - last[0]) / 3;
+            }    
+            if (Math.abs(last[1] - new_pt[1]) > .0003) {
+                last[1] += (new_pt[1] - last[1]) / 3;
+            }    
+
+            points[points.length - 1] = last;
+            
+            var dlon = Math.abs(last[0] - new_pt[0]);
+            var dlat = Math.abs(last[1] - new_pt[1]);
+            if (dlat < .0005 && dlon < .0005) {
+                clearInterval(updateInterval);
+                new_pt = null;
+            }   
+        } else {
+            clearInterval(updateInterval);
+        }
+    }
+
     function update(){
+        updateMesh();
         // the transparent circles that serve as ui, allowing for dragging and deleting
         var circles = ui.selectAll("circle")
             .data(points);
@@ -104,7 +150,7 @@ sb.mesh = function(frame, map, width, height) {
         circles.exit().remove();
 
         circles.attr("id",function(d,i){ return "c-"+i; })
-            .attr("r", 6)
+            .attr("r", 5)
             .attr("cx", function(d) {
                 return map.l2p({
                     lat: d[1],
@@ -125,37 +171,13 @@ sb.mesh = function(frame, map, width, height) {
             list.select("#p-"+i).attr("class","place");
         });
 
-        // the delaunay mesh paths
-        var lines = g.selectAll("path")
-            .data(d3.geom.delaunay(points));
-
-        lines.enter().append("svg:path");
-        lines.exit().remove();
-        
-        lines.attr("d", function(d) {
-                var l = d.length;
-                var draw = [];
-                for (var i = 0; i < l; i++){
-                    var loc = {
-                        lat: parseFloat(d[i][1]),
-                        lon: parseFloat(d[i][0])
-                    };
-
-                    var pt = map.l2p(loc);
-
-                    // draw.push([x(d[i][0]),y(d[i][1])]);
-                    draw.push([pt.x, pt.y]);
-                } 
-                return "M" + draw.join("L") + "Z"; 
-            });
-
         // place names for the points
         var names = list.selectAll("li.place")
             .data(points);
         
         var place = names.enter().append("li").attr("class","place");
-        place.append("span").attr("class","name");
-        place.append("span").attr("class","delete").text("x");
+            place.append("span").attr("class","name");
+            place.append("span").attr("class","delete").html("x");
         names.exit().remove();
 
         names.attr("id",function(d,i){ return "p-"+i; })
@@ -166,8 +188,8 @@ sb.mesh = function(frame, map, width, height) {
 
         names.select(".delete").on("click",function(d,i){
             self.remove(i);
-            update();
             map.updateBounds(lats, lons);
+            update();
         });
 
         names.on("mouseover",function(d,i){
@@ -176,28 +198,14 @@ sb.mesh = function(frame, map, width, height) {
         names.on("mouseout",function(d,i){
             ui.select("#c-"+i).attr("class","");
         });
-        
-        // we move the newest point closer and closer to its destination
-        if (new_pt) {
-	        var last = points[points.length-1];
-	        if (Math.abs(last[0] - new_pt[0]) > .0003) {
-	            last[0] += (new_pt[0] - last[0]) / 3;
-	        }    
-	        if (Math.abs(last[1] - new_pt[1]) > .0003) {
-	            last[1] += (new_pt[1] - last[1]) / 3;
-	        }    
 
-	        points[points.length - 1] = last;
-	        
-            var dlon = Math.abs(last[0] - new_pt[0]);
-            var dlat = Math.abs(last[1] - new_pt[1]);
-	        if (dlat < .0005 && dlon < .0005) {
-	            clearInterval(updateInterval);
-	            new_pt = null;
-	        }	
-        } else {
-            clearInterval(updateInterval);
-        }
+        placeTitle.text(function(){
+            if (places.length == 0) return "";
+            else {
+                var multiple = places.length > 1;
+                return places.length + " Place" + (multiple ? "s " : " " ) + "Added";
+            }
+        })
     };
 
     self.add = function(latitude, longitude, placename) {
@@ -212,7 +220,7 @@ sb.mesh = function(frame, map, width, height) {
         lats.push(lat);
         lons.push(lon);
         if (placename == undefined)
-            places.push(latitude.toString().substr(0,6)+", "+longitude.toString().substr(0,6));
+            places.push(latitude.toFixed(3)+", "+longitude.toFixed(3));
         else
             places.push(placename);
 
@@ -221,24 +229,27 @@ sb.mesh = function(frame, map, width, height) {
 
         	// make the new point start from the last location
             var last = points[points.length-1];
-            points.push([last[0], last[1]]);  
+            points.push([last[0], last[1]]);
+            update();
 
             // animate the new point in place
-            updateInterval = setInterval(update, 40);
+            updateInterval = setInterval(updateMesh, 40);
         } else {
             points.push([lon, lat]);
             update();
         }
+        if (points.length > 3) $("#next").addClass("active");
+        else $("#next").removeClass("active");
 
         return self;
     };
 
-    self.remove = function(index) {
-        
+    self.remove = function(index) {     
         points.splice(index, 1);
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
+        if (points.length < 4) $("#next").removeClass("active");
     };
 
     self.lats = function() {
