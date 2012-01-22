@@ -24,6 +24,8 @@ sb.map = function(frame, width, height) {
 	
 	self.map.add(image);
 
+	$(".map").find("rect").attr("visibility","visible").attr("fill","white");
+
 	// self.map.add(po.interact());
 
 	self.frame = function() {

@@ -5,11 +5,10 @@ $(function() {
 		var meshu = sb.meshu(e);
 	});
 	$("#next").click(function(){
-	    $(".frame").addClass("left");
-	    $("#materials").addClass("active");
+	    $("#content").addClass("materials")
 	});
 	$("#back").click(function(){
-	    $(".frame").removeClass("left");
+	    $("#content").removeClass("materials")
 	});
 	
 });

@@ -37,6 +37,7 @@ h1#meshu {
     border: 1px solid #888;
     min-height: 600px;
     position: relative;
+    overflow: hidden;
 }
 
 #content h2 {
@@ -46,9 +47,22 @@ h1#meshu {
 
 #edit {
     padding: 20px;
-    position: relative;
     width: 360px;
     min-height: 560px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: left 1s;
+    -moz-transition: left 1s;
+    -webkit-transition: left 1s;
+    -o-transition: left 1s;
+}
+.materials #edit {
+    left: -400px;
+    transition: left 1s;
+    -moz-transition: left 1s;
+    -webkit-transition: left 1s;
+    -o-transition: left 1s;
 }
 
 input {
@@ -122,12 +136,26 @@ input {
     -webkit-transition: right 1s;
     -o-transition: right 1s;
 }
-.frame.left {
+.materials .frame {
     right: 400px;
     transition: right 1s;
     -moz-transition: right 1s;
     -webkit-transition: right 1s;
     -o-transition: right 1s;
+}
+.map .layer {
+    opacity: 1;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+}
+.materials .map .layer {
+    opacity: .3;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
 }
 
 #next, #back {
@@ -162,11 +190,20 @@ input {
     position: relative;
     width: 360px;
     min-height: 560px;
-    float: right;
-    display: none;
+    position: absolute;
+    top: 0;
+    right: -400px;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
 }
-#materials.active{
-    display: block;
+.materials #materials{
+    right: 0px;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
 }
 
 /* 
