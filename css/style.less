@@ -7,6 +7,9 @@
     -webkit-transition: opacity @time;
     -o-transition: opacity @time;
 }
+@grey: #808080;
+@pink: #FF3FB4;
+@blue: #1fcaff;
 
 
 /* main page styles */
@@ -47,7 +50,7 @@ h1#meshu {
 #content {
     width: 1000px;
     margin: 0 auto;
-    border: 1px solid #888;
+    border: 1px solid @grey;
     min-height: 600px;
     position: relative;
     overflow: hidden;
@@ -81,13 +84,13 @@ h1#meshu {
 
 input {
     width: 200px;
-    color: #888;
-    border: 1px solid #0cf;
+    color: @grey;
+    border: 1px solid @blue;
     padding: 5px;
 }
 .button {
     cursor: pointer;
-    background-color: #0cf;
+    background-color: @blue;
     color: white;
     padding: 3px 5px;
     margin: 4px 0;
@@ -102,7 +105,7 @@ input {
     margin-bottom: 5px;
 }
 .maybe-place {
-    color: #808080;
+    color: @grey;
     cursor: pointer;
 }
 .maybe-place:hover {
@@ -113,16 +116,16 @@ input {
     margin-top: 40px;
 }
 .place {
-    color: #808080;
+    color: @grey;
 }
 .place.highlight {
-    color: #FF3FB4;
+    color: @pink;
 }
 .place .delete {
     display: none;
     margin-left: 15px;
     padding: 0 3px;
-    background-color: #FF3FB4;
+    background-color: @pink;
     cursor: pointer;
     color: white;
 }
@@ -184,19 +187,19 @@ input {
 }
 
 #options {
-    margin-top: 60px;
+    margin-top: 50px;
 }
 #options h2 {
     margin: 20px 0 10px;
 }
 #options li {
-    color: #808080;
+    color: @grey;
 }
 #options li:hover {
     color: black;
 }
 #options li.selected {
-    color: #FF3FB4;
+    color: @pink;
 }
 .option-list li {
     cursor: pointer;
@@ -214,7 +217,7 @@ input {
 }
 .material-list li.selected .price {
     display: inline;
-    color: #808080;
+    color: @grey;
 }
 
 #total {
@@ -227,11 +230,11 @@ input {
 .total-cost {
     float: right;
     font-size: 28px;
-    color: #808080;
+    color: @grey;
 }
 
 #next, #back, #checkout-button {
-    background-color: #FF3FB4;
+    background-color: @pink;
     color: white;
     padding: 5px 10px;
     cursor: pointer;
@@ -244,6 +247,7 @@ input {
     .fade;
 }
 #back {
+    background-color: @grey;
     position: absolute;
     left: 20px;
     top: 20px;
@@ -270,16 +274,11 @@ path {
 }
 
 circle {
-	fill: black;
-	fill-opacity: 0;
+    fill: @pink;
+    fill-opacity: 0;
 }
 
-circle:hover {
-	fill: black;
-	fill-opacity: 1;
-	cursor: pointer;
-}
-circle.highlight {
-    fill: #FF3FB4;
+circle:hover, circle.highlight {
     fill-opacity: 1;
+    cursor: pointer;
 }
