@@ -10,6 +10,10 @@ ul {
     list-style-type: none;
 }
 
+h2 {
+    font-weight: normal;
+}
+
 #top {
     width: 1000px;
     margin: 30px auto 0;
@@ -158,14 +162,16 @@ input {
     -o-transition: opacity 1s;
 }
 
-#next, #back {
+#next, #back, #checkout {
     background-color: #FF3FB4;
     color: white;
     padding: 5px 10px;
+    cursor: pointer;
+}
+#next {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    cursor: pointer;
     opacity: 0;
     transition: opacity 1s;
     -moz-transition: opacity 1s;
@@ -173,9 +179,14 @@ input {
     -o-transition: opacity 1s;
 }
 #back {
+    position: absolute;
     left: 20px;
-    right: auto;
-    opacity: 1;
+    top: 20px;
+}
+#checkout {
+    position: relative;
+    float: right;;
+    font-size: 20px;
 }
 #next.active {
     opacity: 1;
@@ -204,6 +215,51 @@ input {
     -moz-transition: right 1s;
     -webkit-transition: right 1s;
     -o-transition: right 1s;
+}
+#options {
+    margin-top: 60px;
+}
+#options h2 {
+    margin: 20px 0 10px;
+}
+#options li {
+    color: #808080;
+}
+#options li:hover {
+    color: black;
+}
+#options li.selected {
+    color: #FF3FB4;
+}
+.option-list li {
+    cursor: pointer;
+}
+.material-list {
+    width: 200px;
+}
+.material-list li .price {
+    float: right;
+    color: black;
+    display: none;
+}
+.material-list li:hover .price {
+    display: inline;
+}
+.material-list li.selected .price {
+    display: inline;
+    color: #808080;
+}
+#total {
+    display: block;
+    width: 100%;
+    border-top: 1px solid black;
+    margin-top: 40px;
+    padding-top: 10px;
+}
+.total-cost {
+    float: right;
+    font-size: 28px;
+    color: #808080;
 }
 
 /* 
