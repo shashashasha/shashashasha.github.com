@@ -23,15 +23,16 @@ sb.meshu = function(frame) {
                 if (results.length == 1)
                     addPoint(results[0],input);
                 else {
+                    var list = $("<ul>").append($("<li>").attr("class","title").text("Hrm, did you mean:")).appendTo(cases);
                     for (var i = 0; i < results.length; i++) {
                         var r = results[i];
-                        $("<p>").text(r.city+", "+r.state+", "+r.country)
+                        $("<li>").text(r.city+", "+r.state+", "+r.country)
                             .addClass("maybe-place")
                             .data("place",r)
-                            .appendTo("#cases");
+                            .appendTo(list);
                     }
                     cases.slideDown('fast');
-                    $("#cases p").click(function(){
+                    $("#cases li").click(function(){
                         var r = $(this);
                         addPoint(r.data("place"),input);
                         cases.slideUp('fast');

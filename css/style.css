@@ -3,6 +3,12 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
 h1#meshu {
     width: 1000px;
     margin: 0 auto;
@@ -14,6 +20,11 @@ h1#meshu {
     margin: 0 auto;
     border: 1px solid #888;
     min-height: 600px;
+}
+
+#content h2 {
+    font-size: 28px;
+    margin: 0 0 10px;
 }
 
 #text {
@@ -37,8 +48,20 @@ input {
     display: inline;
 }
 
+#cases {
+    margin: 5px 0;
+}
+
+#cases ul, #places ul {
+    font-size: 14px;
+}
+
+#cases li.title {
+    margin-bottom: 5px;
+}
+
 .maybe-place {
-    color: grey;
+    color: #808080;
     cursor: pointer;
 }
 .maybe-place:hover {
@@ -46,12 +69,17 @@ input {
 }
 
 #places {
-    width: 400px;
+    margin-top: 40px;
+}
+
+.place {
+    color: #808080;
 }
 
 .place .delete {
     display: none;
     margin-left: 15px;
+    padding: 0 3px;
     background-color: #FF3FB4;
     cursor: pointer;
     color: white;
