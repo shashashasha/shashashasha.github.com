@@ -1,6 +1,7 @@
 /* main page styles */
 body {
     font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
 }
 
 ul {
@@ -9,10 +10,25 @@ ul {
     list-style-type: none;
 }
 
-h1#meshu {
+#top {
     width: 1000px;
-    margin: 0 auto;
-    margin-top: 50px;
+    margin: 30px auto 0;
+    position: relative;
+}
+
+h1#meshu {
+    margin: 0;
+}
+
+#nav {
+    position: absolute;
+    bottom: 3px;
+    right: 0;
+    font-size: 18px;
+}
+#nav li {
+    display: inline-block;
+    margin-left: 25px;
 }
 
 #content {
@@ -20,6 +36,7 @@ h1#meshu {
     margin: 0 auto;
     border: 1px solid #888;
     min-height: 600px;
+    position: relative;
 }
 
 #content h2 {
@@ -27,8 +44,11 @@ h1#meshu {
     margin: 0 0 10px;
 }
 
-#text {
+#edit {
     padding: 20px;
+    position: relative;
+    width: 360px;
+    min-height: 560px;
 }
 
 input {
@@ -94,7 +114,59 @@ input {
 .frame {
 	width: 600px;
 	height: 600px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
+}
+.frame.left {
+    right: 400px;
+    transition: right 1s;
+    -moz-transition: right 1s;
+    -webkit-transition: right 1s;
+    -o-transition: right 1s;
+}
+
+#next, #back {
+    background-color: #FF3FB4;
+    color: white;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+}
+#back {
+    left: 20px;
+    right: auto;
+    opacity: 1;
+}
+#next.active {
+    opacity: 1;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+}
+
+#materials {
+    padding: 20px;
+    position: relative;
+    width: 360px;
+    min-height: 560px;
     float: right;
+    display: none;
+}
+#materials.active{
+    display: block;
 }
 
 /* 

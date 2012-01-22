@@ -238,6 +238,8 @@ sb.mesh = function(frame, map, width, height) {
             points.push([lon, lat]);
             update();
         }
+        if (points.length > 3) $("#next").addClass("active");
+        else $("#next").removeClass("active");
 
         return self;
     };
@@ -247,6 +249,7 @@ sb.mesh = function(frame, map, width, height) {
         lats.splice(index, 1);
         lons.splice(index, 1);
         places.splice(index, 1);
+        if (points.length < 4) $("#next").removeClass("active");
     };
 
     self.lats = function() {

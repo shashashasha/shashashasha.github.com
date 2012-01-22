@@ -4,5 +4,12 @@ $(function() {
 	$(".frame").each(function(i, e) {
 		var meshu = sb.meshu(e);
 	});
+	$("#next").click(function(){
+	    $(".frame").addClass("left");
+	    $("#materials").addClass("active");
+	});
+	$("#back").click(function(){
+	    $(".frame").removeClass("left");
+	});
 	
 });
